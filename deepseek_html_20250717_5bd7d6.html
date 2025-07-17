@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Submission Portal</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 60px; /* Space for footer */
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 30px 0;
+        }
+        
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-copy {
+            background: var(--secondary);
+            margin-left: 10px;
+        }
+        
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary);
+            display: none;
+        }
+        
+        .result-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .result-content {
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .animation {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(253, 121, 168, 0.5);
+        }
+        
+        /* New footer styles */
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+            backdrop-filter: blur(5px);
+        }
+        
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container animation">
+        <div class="header">
+            <h1>TRANSFER SCHEDULING PORTAL</h1>
+        </div>
+        
+        <div class="content">
+            <form id="transferForm">
+                <div class="form-group">
+                    <label for="schedule">Schedule Date</label>
+                    <input type="date" id="schedule" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="time">Time</label>
+                    <input type="time" id="time" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" placeholder="Enter full address" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter phone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="project">Project</label>
+                    <input type="text" id="project" placeholder="Enter project name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <input type="text" id="notes" placeholder="Enter any notes">
+                </div>
+                
+                <button type="submit" class="btn">SUBMIT TRANSFER</button>
+            </form>
+            
+            <div id="resultContainer" class="result-container">
+                <h3 class="result-title">
+                    TRANSFER RESULT
+                    <button id="copyBtn" class="btn btn-copy">COPY</button>
+                </h3>
+                <div id="resultContent" class="result-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        All rights reserved © 2025 created by <span class="highlight">Edmark</span>
+    </footer>
+
+    <script>
+        document.getElementById('transferForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const schedule = document.getElementById('schedule').value;
+            const time = document.getElementById('time').value;
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            const project = document.getElementById('project').value;
+            const notes = document.getElementById('notes').value;
+            
+            // Format date (MM/DD/YY)
+            const formattedDate = formatDate(schedule);
+            
+            // Format time (HH:MM AM/PM)
+            const formattedTime = formatTime(time);
+            
+            // Format phone number (XXX-XXX-XXXX)
+            const formattedPhone = formatPhone(phone);
+            
+            // Capitalize all letters for name, address, project, notes
+            const formattedName = name.toUpperCase();
+            const formattedAddress = address.toUpperCase();
+            const formattedProject = project.toUpperCase();
+            const formattedNotes = notes.toUpperCase();
+            
+            // Build result string
+            let result = `Successful Transfer\n`;
+            result += `Schedule: ${formattedDate}\n`;
+            result += `Time: ${formattedTime}\n`;
+            result += `Name: ${formattedName}\n`;
+            result += `Address: ${formattedAddress}\n`;
+            result += `Phone: ${formattedPhone}\n`;
+            result += `Project: ${formattedProject}\n`;
+            result += `Notes: ${formattedNotes}`;
+            
+            // Display result
+            document.getElementById('resultContent').textContent = result;
+            document.getElementById('resultContainer').style.display = 'block';
+            
+            // Scroll to result
+            document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const resultText = document.getElementById('resultContent').textContent;
+            navigator.clipboard.writeText(resultText).then(() => {
+                const originalText = this.textContent;
+                this.textContent = 'COPIED!';
+                setTimeout(() => {
+                    this.textContent = originalText;
+                }, 2000);
+            });
+        });
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const year = date.getFullYear().toString().slice(-2);
+            return `${month}/${day}/${year}`;
+        }
+        
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            const hourNum = parseInt(hours);
+            const ampm = hourNum >= 12 ? 'PM' : 'AM';
+            const displayHour = hourNum % 12 || 12;
+            return `${displayHour}:${minutes}${ampm}`;
+        }
+        
+        function formatPhone(phone) {
+            // Remove all non-digit characters
+            const cleaned = phone.replace(/\D/g, '');
+            
+            // Check if the phone number is valid length
+            if (cleaned.length === 10) {
+                return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            } else if (cleaned.length === 11 && cleaned.startsWith('1')) {
+                return cleaned.replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
+            }
+            
+            // Return original if formatting fails
+            return phone;
+        }
+    </script>
+</body>
+</html>
