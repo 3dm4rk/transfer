@@ -285,12 +285,13 @@
         });
         
         function formatDate(dateString) {
-            const date = new Date(dateString);
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            const year = date.getFullYear().toString().slice(-2);
-            return `${month}/${day}/${year}`;
-        }
+        const date = new Date(dateString);
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const year = date.getFullYear().toString().slice(-2);
+        // Remove leading zero for months 1-9 and days 1-9
+        return `${month}/${day}/${year}`.replace(/\b0/g, '');
+    }
         
         function formatTime(timeString) {
             const [hours, minutes] = timeString.split(':');
