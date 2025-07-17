@@ -294,12 +294,13 @@
     }
         
         function formatTime(timeString) {
-            const [hours, minutes] = timeString.split(':');
-            const hourNum = parseInt(hours);
-            const ampm = hourNum >= 12 ? 'PM' : 'AM';
-            const displayHour = hourNum % 12 || 12;
-            return `${displayHour}:${minutes}${ampm}`;
-        }
+        const [hours, minutes] = timeString.split(':');
+        const hourNum = parseInt(hours);
+        const ampm = hourNum >= 12 ? 'PM' : 'AM';
+        const displayHour = hourNum % 12 || 12;
+        // Remove leading zero for hours 1-9
+        return `${displayHour.toString().replace(/^0/, '')}:${minutes}${ampm}`;
+    }
         
         function formatPhone(phone) {
             // Remove all non-digit characters
